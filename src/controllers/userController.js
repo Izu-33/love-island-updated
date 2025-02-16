@@ -224,9 +224,26 @@ const deleteUserById = async (req, res) => {
         const userId = req.params.id;
         const user = await User.findById(userId);
 
-        
-    } catch (err) {
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: 'User not found'
+            });
+        }
 
+        user.isDeleted = true;
+        await user.save();
+        return res.status(200).json({
+            success: true,
+            message: 'User deleted successfully',
+            user: user
+        });
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: 'Internal server error',
+            error: err.message
+        });
     }
 };
 
