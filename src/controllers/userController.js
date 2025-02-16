@@ -158,9 +158,44 @@ const getUsersByInterest = async (req, res) => {
     }
 };
 
+const getUsersByHobby = async (req, res) => {
+    try {
+        const hobby = req.query.hobby;
+
+        if (!hobby) {
+            return res.status(400).json({
+                success: false,
+                message: 'Please provide a hobby to search for.'
+            });
+        }
+
+        const users = await User.find({ hobbies: { $in: [hobby] } });
+
+        if (users.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: 'No users found with the specified hobby.'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'Users fetched successfully',
+            users
+        });
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: 'Internal server error',
+            error: err.message
+        });
+    }
+};
+
 module.exports = {
     signUp,
     signIn,
     updateUser,
-    getUsersByInterest
+    getUsersByInterest,
+    getUsersByHobby
 };
