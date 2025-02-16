@@ -219,11 +219,23 @@ const getUserById = async (req, res) => {
     }
 };
 
+const deleteUserById = async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const user = await User.findById(userId);
+
+        
+    } catch (err) {
+
+    }
+};
+
 module.exports = {
     signUp,
     signIn,
     updateUser,
     getUsersByInterest,
     getUsersByHobby,
-    getUserById
+    getUserById,
+    deleteUserById
 };

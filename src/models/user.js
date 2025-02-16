@@ -29,7 +29,11 @@ const userSchema = new mongoose.Schema({
     location: String,
     stateOfOrigin: String,
     isRich: Boolean,
-    picture: String
+    picture: String,
+    isDeleted: {
+        type: Boolean,
+        default: false
+    }
 }, {timestamps: true});
 
 const User = mongoose.model('User', userSchema);

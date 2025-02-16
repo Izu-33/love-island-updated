@@ -5,7 +5,8 @@ const {
     updateUser,
     getUsersByInterest,
     getUsersByHobby,
-    getUserById
+    getUserById,
+    deleteUserById
 } = require('../controllers/userController');
 
 const router = express.Router();
@@ -19,5 +20,6 @@ router.get("/users-by-interest", getUsersByInterest);
 router.get('/users-by-hobby', getUsersByHobby);
 router.get('/user/:id', getUserById);
 
+router.delete('/delete-user/:id', deleteUserById);
 
 module.exports = router;
