@@ -125,8 +125,42 @@ const updateUser = async (req, res) => {
     }
 };
 
+const getUsersByInterest = async (req, res) => {
+    try {
+        const interestedIn = req.query.interestedIn;
+
+        if (!interestedIn) {
+            return res.status(400).json({
+                success: false,
+                message: 'Please provide an interestedIn value.'
+            });
+        }
+
+        const users = await User.find({ gender: interestedIn });
+
+        if (users.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: 'No users found for the given interest.'
+            });
+        }
+
+        res.status(200).json({ 
+            success: true,
+            users
+        });
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: 'Internal server error',
+            error: err.message
+        });
+    }
+};
+
 module.exports = {
     signUp,
     signIn,
-    updateUser
+    updateUser,
+    getUsersByInterest
 };
