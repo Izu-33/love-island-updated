@@ -9,17 +9,17 @@ const userSchema = new mongoose.Schema({
         type: String,
         required:true
     },
-    gender: String,
-    age: Number,
     email: {
         type: String,
         unique: true
     },
-    password: String,
     username: {
         type: String,
         unique: true
     },
+    password: String,
+    gender: String,
+    age: Number,
     phone: String,
     bio: String,
     hobbies: [String],
@@ -27,10 +27,7 @@ const userSchema = new mongoose.Schema({
     dob: Date,
     location: String,
     stateOfOrigin: String,
-    isRich:{
-        type: Boolean,
-        required: true
-    },
+    isRich: Boolean,
     picture: String
 }, {timestamps: true});
 
