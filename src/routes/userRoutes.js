@@ -4,7 +4,8 @@ const {
     signIn,
     updateUser,
     getUsersByInterest,
-    getUsersByHobby
+    getUsersByHobby,
+    getUserById
 } = require('../controllers/userController');
 
 const router = express.Router();
@@ -16,6 +17,7 @@ router.patch('/update-user-profile/:id', updateUser);
 
 router.get("/users-by-interest", getUsersByInterest);
 router.get('/users-by-hobby', getUsersByHobby);
+router.get('/user/:id', getUserById);
 
 
 module.exports = router;
