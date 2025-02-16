@@ -5,7 +5,16 @@ const jwt = require('jsonwebtoken');
 
 const signUp = async (req, res) => {
     try {
-        const { username, email, password } = req.body;
+        const { 
+            firstName, 
+            lastName, 
+            username, 
+            email, 
+            password, 
+            gender,
+            age
+        } = req.body;
+
         const isExistingUser = await User.findOne({$or: [{username}, {email}]});
     
         if (isExistingUser) {
@@ -23,7 +32,9 @@ const signUp = async (req, res) => {
             lastName,
             email,
             username,
-            password: hashedPassword
+            password: hashedPassword,
+            gender,
+            age
         });
 
         await newUser.save();
