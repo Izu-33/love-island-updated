@@ -22,6 +22,7 @@ const userSchema = new mongoose.Schema({
     age: Number,
     phone: String,
     bio: String,
+    interestedIn: String,
     hobbies: [String],
     occupation: String,
     dob: Date,

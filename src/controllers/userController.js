@@ -47,7 +47,7 @@ const signUp = async (req, res) => {
         res.status(500).json({
             success: false,
             message: 'Internal server error',
-            error: err
+            error: err.message
         });
     }
     
@@ -87,16 +87,46 @@ const signIn = async (req, res) => {
         });
 
     } catch (err) {
-        console.log(err);
         res.status(500).json({
             success: false,
             message: 'Internal server error',
-            error: err
+            error: err.message
+        });
+    }
+};
+
+const updateUser = async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const updates = req.body;
+
+        const updatedUser = await User.findByIdAndUpdate(userId, updates, {
+            new: true , runValidators: true
+        });
+
+        if (!updatedUser) {
+            return res.status(404).json({
+                success: false,
+                message: 'User not found'
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: 'Profile updated successfully',
+            updatedUser: updatedUser
+        });
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: 'Internal server error',
+            error: err.message
         });
     }
 };
 
 module.exports = {
     signUp,
-    signIn
+    signIn,
+    updateUser
 };
