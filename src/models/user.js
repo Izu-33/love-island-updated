@@ -31,7 +31,10 @@ const userSchema = new mongoose.Schema({
     stateOfOrigin: String,
     isRich: Boolean,
     picture: String,
-    reports: [reportSchema],
+    reports: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Report'
+    }],
     isDeleted: {
         type: Boolean,
         default: false

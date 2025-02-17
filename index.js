@@ -1,14 +1,14 @@
 require('dotenv/config');
 const express = require('express');
 const connectToDB = require('./src/config/db');
-const userRouter = require('./src/routes/userRoutes');
+const router = require('./src/router');
 
 const app = express();
 
 connectToDB();
 
 app.use(express.json());
-app.use('/api/v1/love-island', userRouter);
+app.use('/api/v1/love-island', router);
 
 const PORT = process.env.PORT || 8000;
 
