@@ -41,4 +41,47 @@ const reportUser = async (req, res) => {
     }
 };
 
-module.exports = reportUser;
+const getAllReportedUsers = async (req, res) => {
+    try {
+        const reports = await Report.find().populate('reportedUserId');
+        const reportedUsers = reports.map(report => report.reportedUserId);
+
+        return res.status(200).json({
+            success: true,
+            message: 'Reported users fetched successfully',
+            reportedUsers
+        });
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: 'Internal server error',
+            error: err.message
+        });
+    }
+};
+
+const getAllReports = async (req, res) => {
+    try {
+        const reports = await Report.find()
+            .populate('reporterId')
+            .populate('reportedUserId');
+
+        return res.status(200).json({
+            success: true,
+            message: 'Reports fetched successfully',
+            reports
+        });
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: 'Internal server error',
+            error: err.message
+        });
+    }
+};
+
+module.exports = {
+    reportUser,
+    getAllReportedUsers,
+    getAllReports
+};
