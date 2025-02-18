@@ -1,4 +1,5 @@
 const Chat = require('../models/chat');
+const { getSocket } = require('../../socket');
 
 const sendMessage = async (req, res) => {
     try {
@@ -15,15 +16,18 @@ const sendMessage = async (req, res) => {
         const newChat = new Chat({
             senderId,
             receiverId,
-            messaage
+            message
         });
 
         await newChat.save();
 
+        const io = getSocket();
+        io.to(receiverId).emit("newChat", newChat);
+
         return res.status(201).json({
             success: true,
             message: 'Message sent',
-            data: newchat
+            data: newChat
         });
     } catch (err) {
         return res.status(500).json({
